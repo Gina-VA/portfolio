@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gina Boquecosa · Virtual Assistant</title>
-<meta name="description" content="Gina Marie Boquecosa, Virtual Assistant with 5+ years of QA testing experience, based in Cebu, Philippines.">
+<meta name="description" content="Gina Marie Boquecosa, Virtual Assistant with 6 years of QA testing experience, based in Cebu, Philippines.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap">
@@ -52,8 +52,12 @@ section{padding:104px 0}
 .kicker::before{content:""; width:18px; height:18px; border-radius:5px; background:var(--sun); box-shadow:inset 0 0 0 2px var(--sun)}
 
 /* buttons */
-.btn{display:inline-flex; align-items:center; gap:10px; font:inherit; font-weight:700; font-size:1rem; padding:14px 22px; border-radius:999px; border:2px solid var(--ink); background:var(--ink); color:var(--bg); text-decoration:none; cursor:pointer; transition:transform .15s ease, background .15s}
-.btn:hover{transform:translateY(-1px)}
+.btn{display:inline-flex; align-items:center; gap:10px; font:inherit; font-weight:700; font-size:1rem; padding:14px 22px; border-radius:999px; border:2px solid var(--ink); background:var(--ink); color:var(--bg); text-decoration:none; cursor:pointer; transition:transform .2s ease, background-color .2s, border-color .2s, color .2s, box-shadow .2s}
+.btn:hover,.btn:focus-visible{transform:translateY(-3px); box-shadow:0 12px 24px -10px rgba(24,33,61,.6)}
+.btn:active{transform:translateY(-1px)}
+.btn:not(.ghost):not(.sun):hover,.btn:not(.ghost):not(.sun):focus-visible{background:var(--sun); border-color:var(--sun); color:var(--sun-ink)}
+.btn.ghost:hover,.btn.ghost:focus-visible{background:var(--ink); color:var(--bg)}
+.btn.sun:hover,.btn.sun:focus-visible{background:var(--navy); border-color:var(--navy); color:var(--sun); box-shadow:0 12px 24px -8px rgba(30,43,85,.6)}
 .btn.ghost{background:transparent; color:var(--ink)}
 .btn.sun{background:var(--sun); border-color:var(--sun); color:var(--sun-ink)}
 
@@ -61,7 +65,13 @@ section{padding:104px 0}
 .nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:30; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:72px; gap:16px}
 .logo{display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; font-size:1.1rem; letter-spacing:-.02em}
-.logo .mark{width:34px; height:34px; border-radius:10px; background:var(--navy); color:var(--sun); display:grid; place-items:center}
+.logo .mark{width:34px; height:34px; border-radius:10px; background:var(--navy); color:var(--sun); display:grid; place-items:center; transition:transform .3s ease, background-color .25s, color .25s, box-shadow .25s}
+.logo .mark path{stroke-dasharray:24; stroke-dashoffset:0}
+.logo:hover .mark,.logo:focus-visible .mark{background:var(--sun); color:var(--navy); transform:rotate(-8deg) scale(1.08); box-shadow:0 8px 16px -6px rgba(242,178,59,.75)}
+.logo:hover .mark path,.logo:focus-visible .mark path{animation:logo-tick .45s ease}
+@keyframes logo-tick{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
+.logo{background:linear-gradient(var(--sun),var(--sun)) 44px bottom/0 2px no-repeat; transition:background-size .3s ease}
+.logo:hover,.logo:focus-visible{background-size:calc(100% - 44px) 2px}
 :root:not([data-theme="light"]) .logo .mark{outline:1px solid var(--line)}
 .links{display:flex; align-items:center; gap:6px}
 .links a.l{position:relative; text-decoration:none; font-weight:600; padding:8px 12px; color:var(--ink-2); transition:color .2s}
@@ -135,12 +145,27 @@ section{padding:104px 0}
 
 /* work */
 .filters{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px}
-.filters button{font:inherit; font-weight:600; font-size:.95rem; padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink-2); cursor:pointer}
+.filters button{font:inherit; font-weight:600; font-size:.95rem; padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink-2); cursor:pointer; transition:border-color .2s, color .2s, transform .2s}
+.filters button:hover{border-color:var(--sun); color:var(--ink); transform:translateY(-2px)}
 .filters button[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
 .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
 @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:620px){.grid{grid-template-columns:1fr}}
-.card{display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden}
+.card{position:relative; display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; transition:transform .25s ease, border-color .25s, box-shadow .25s}
+.card:hover,.card:focus-within{transform:translateY(-6px); border-color:var(--sun); box-shadow:var(--shadow)}
+.card .thumb svg{transition:transform .4s ease}
+.card:hover .thumb svg{transform:scale(1.06) rotate(-1deg)}
+.card .thumb{transition:background-color .3s}
+.card:hover .thumb{background-color:#2A3A73}
+.card h3{transition:color .2s}
+.card:hover h3{color:var(--navy)}
+:root[data-theme="dark"] .card:hover h3{color:var(--sun)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .card:hover h3{color:var(--sun)}}
+.card .tags span{transition:border-color .2s}
+.card:hover .tags span{border-color:var(--sun)}
+.card .open::after{content:""; position:absolute; inset:0}
+.card .open:focus-visible{outline:none}
+.card:has(.open:focus-visible){outline:3px solid var(--sun); outline-offset:3px}
 .card.feature{grid-column:span 2}
 @media (max-width:760px){.card.feature{grid-column:auto}}
 .thumb{aspect-ratio:4/3; background:var(--navy); position:relative; overflow:hidden; display:grid; place-items:center; padding:22px}
@@ -155,7 +180,7 @@ section{padding:104px 0}
 .impact{display:flex; gap:10px; align-items:flex-start; font-weight:600; font-size:.95rem; color:var(--pass); margin-top:auto; padding-top:6px}
 .impact svg{flex:none; margin-top:3px}
 .card .open{align-self:flex-start; font:inherit; font-weight:700; background:none; border:none; color:var(--ink); padding:4px 0; cursor:pointer; border-bottom:2px solid var(--sun)}
-.card .open:hover{border-bottom-color:var(--ink)}
+.card .open:hover,.card:hover .open{border-bottom-color:var(--ink)}
 .hidden{display:none!important}
 
 /* featured */
@@ -165,7 +190,20 @@ section{padding:104px 0}
 .crumb span{margin:0 6px; opacity:.6}
 .fcard h2{margin-top:-14px}
 .fgal{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-.fgal figure{margin:0; border-radius:var(--r-md); overflow:hidden; background:var(--navy)}
+.fgal figure{margin:0; border-radius:var(--r-md); overflow:hidden; background:var(--navy); cursor:pointer; border:2px solid transparent; transition:transform .25s ease, border-color .25s, box-shadow .25s, background-color .3s}
+.fgal figure:hover{transform:translateY(-6px); border-color:var(--sun); box-shadow:var(--shadow); background-color:#2A3A73}
+.fgal .art svg{transition:transform .4s ease}
+.fgal figure:hover .art svg{transform:scale(1.06) rotate(-1deg)}
+.fgal figcaption{transition:color .2s}
+.fgal figure:hover figcaption{color:#fff}
+.fcard{transition:border-color .3s}
+.fcard:hover{border-color:color-mix(in srgb,var(--sun) 55%,var(--line))}
+.fbody > div{padding:6px 0 6px 18px; border-left:3px solid var(--line); transition:border-color .25s, transform .25s ease}
+.fbody > div:hover{border-left-color:var(--sun); transform:translateX(6px)}
+.fbody h3{transition:color .2s}
+.fbody > div:hover h3{color:var(--navy)}
+:root[data-theme="dark"] .fbody > div:hover h3{color:var(--sun)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fbody > div:hover h3{color:var(--sun)}}
 .fgal .art{aspect-ratio:16/10; padding:20px; display:grid; place-items:center}
 .fgal .art svg{width:100%; height:100%}
 .fgal figcaption{padding:10px 14px; font-size:.88rem; color:#B7BFD8}
@@ -180,7 +218,16 @@ section{padding:104px 0}
 .about .copy{display:grid; gap:20px; font-size:1.1rem}
 .about .copy p:first-child{font-size:1.4rem; font-weight:600; line-height:1.4; color:var(--ink)}
 .bridge{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px}
-.bridge div{border:1px solid var(--line); border-radius:var(--r-md); padding:18px; background:var(--surface)}
+.bridge div{position:relative; border:1px solid var(--line); border-radius:var(--r-md); padding:18px; background:var(--surface); transition:transform .25s ease, border-color .25s, box-shadow .25s}
+.bridge div::after{content:"\2713"; position:absolute; top:14px; right:14px; width:26px; height:26px; border-radius:50%; background:var(--pass); color:#fff; font-weight:900; font-size:.85rem; display:grid; place-items:center; opacity:0; transform:scale(.4) rotate(-30deg); transition:opacity .25s, transform .3s ease}
+.bridge div:hover{transform:translateY(-5px); border-color:var(--sun); box-shadow:var(--shadow)}
+.bridge div:hover::after{opacity:1; transform:none}
+.bridge small{padding-right:30px; transition:color .2s}
+.bridge div:hover small{color:var(--pass)}
+.bridge b{transition:color .2s}
+.bridge div:hover b{color:var(--navy)}
+:root[data-theme="dark"] .bridge div:hover b{color:var(--sun)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bridge div:hover b{color:var(--sun)}}
 .bridge small{display:block; color:var(--ink-2); font-size:.85rem; margin-bottom:6px}
 .bridge b{display:block; margin-bottom:4px}
 .bridge p{font-size:.95rem; color:var(--ink-2)}
@@ -282,6 +329,19 @@ footer.site nav a:hover::after,footer.site nav a:focus-visible::after{transform:
 .social a:last-child:hover::after,.social a:last-child:focus-visible::after{transform:translate(0,0)}
 .fbase{display:flex; justify-content:space-between; gap:12px; margin-top:44px; padding-top:20px; border-top:1px solid var(--line); font-size:.88rem}
 .fbase a{text-decoration:none}
+.cr{cursor:default; transition:color .2s}
+.cr-mark{display:inline-block; transition:transform .4s ease, color .2s}
+.cr-name{background:linear-gradient(var(--sun),var(--sun)) left bottom/0 2px no-repeat; padding-bottom:2px; transition:background-size .3s ease}
+.cr:hover{color:var(--ink)}
+.cr:hover .cr-mark{transform:rotate(360deg); color:var(--sun)}
+.cr:hover .cr-name{background-size:100% 2px}
+.fbase{align-items:center}
+.totop{position:relative; width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--ink); display:grid; place-items:center; transition:transform .2s ease, background-color .2s, color .2s, border-color .2s, box-shadow .2s}
+.totop svg{transition:transform .25s ease}
+.totop:hover,.totop:focus-visible{transform:translateY(-4px); background:var(--sun); border-color:var(--sun); color:var(--sun-ink); box-shadow:0 10px 20px -8px rgba(242,178,59,.75)}
+.totop:hover svg{transform:translateY(-3px)}
+.totop::after{content:attr(data-tip); position:absolute; bottom:calc(100% + 10px); right:0; white-space:nowrap; background:var(--ink); color:var(--bg); font-size:.8rem; font-weight:700; padding:5px 10px; border-radius:8px; opacity:0; transform:translateY(4px); pointer-events:none; transition:opacity .15s, transform .15s}
+.totop:hover::after,.totop:focus-visible::after{opacity:1; transform:none}
 @media (max-width:820px){.fgrid{grid-template-columns:1fr 1fr} .fbrand{grid-column:1/-1}}
 
 /* case study dialog */
@@ -382,7 +442,7 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
     <div>
       <span class="avail"><i></i>Taking new clients · GMT+8</span>
       <h1>Your admin, handled with a tester's eye for detail.</h1>
-      <p class="lead">I'm Gina, a Cebu-based virtual assistant with 5+ years in software QA. I help busy founders and small teams keep inboxes, calendars, records, and websites running cleanly, and I check every task before it's marked done.</p>
+      <p class="lead">I'm Gina, a Cebu-based virtual assistant with 6 years in software QA. I help busy founders and small teams keep inboxes, calendars, records, and websites running cleanly, and I check every task before it's marked done.</p>
       <div class="cta">
         <a class="btn" href="#contact">Let's talk</a>
         <a class="tlink" href="#work">View my work</a>
@@ -429,7 +489,7 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
     <div class="fcard">
       <p class="crumb">Portfolio <span aria-hidden="true">/</span> Featured case study</p>
       <h2>Healthcare billing platform</h2>
-      <div class="fgal"><figure data-art="invoice"><figcaption>Invoice and payment states checked on every release</figcaption></figure><figure data-art="checklist"><figcaption>Regression checklist run before each deploy</figcaption></figure></div>
+      <div class="fgal"><figure data-art="invoice" data-id="billing" title="Open the full case study"><figcaption>Invoice and payment states checked on every release</figcaption></figure><figure data-art="checklist" data-id="billing" title="Open the full case study"><figcaption>Regression checklist run before each deploy</figcaption></figure></div>
       <div class="fbody">
         <div><h3>The challenge</h3><p>Billing software touches real money. A small change to invoicing logic could quietly break claims processing or leave payments unreconciled, and those errors are expensive to find after release.</p></div>
         <div><h3>The solution</h3><p>I mapped how money moved through the system, wrote test cases based on real billing scenarios, logged clear bug reports with evidence, and ran acceptance testing with the billing team before each release.</p></div>
@@ -447,7 +507,7 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
       <h2>Why a QA tester makes a dependable VA</h2>
     </div>
     <div class="copy">
-      <p>For five years my job was to find what's broken before customers did. Now I bring that same habit to your day-to-day work.</p>
+      <p>For six years my job was to find what's broken before customers did. Now I bring that same habit to your day-to-day work.</p>
       <p class="muted">I tested billing systems, patient portals, online stores, and legal software alongside developers, designers, and compliance teams. That taught me to write things down clearly, follow every request through to the end, and treat private data with care. As your VA, those habits mean fewer dropped balls and fewer surprises.</p>
       <div class="bridge">
         <div><small>In QA I wrote test cases</small><b>I document your processes</b><p>Step-by-step SOPs so tasks get done the same way every time.</p></div>
@@ -594,7 +654,7 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
       <a href="#contact" aria-label="Send a message" data-tip="Send a message" data-goform><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></a>
     </div>
   </div>
-  <div class="wrap fbase"><span>&copy; 2026 Gina Marie Boquecosa</span><a href="#top">Back to top</a></div>
+  <div class="wrap fbase"><span class="cr"><span class="cr-mark">&copy;</span> 2026 <span class="cr-name">Gina Marie Boquecosa</span></span><a class="totop" href="#top" aria-label="Back to top" data-tip="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a></div>
 </footer>
 
 <dialog id="cs" aria-labelledby="cs-title">
