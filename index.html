@@ -404,13 +404,13 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
 .bk-ok{width:56px; height:56px; border-radius:50%; background:var(--pass); color:#fff; display:grid; place-items:center}
 .bk-actions{display:flex; flex-wrap:wrap; gap:12px}
 /* phone */
-#phone,#email{width:min(540px,100%)}
+#phone,#email,#send{width:min(540px,100%)}
 .ph-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
 .ph-opt{display:flex; align-items:center; gap:12px; padding:14px; border:1px solid var(--line); border-radius:14px; background:var(--surface); color:var(--ink); text-decoration:none; font:inherit; text-align:left; cursor:pointer; transition:border-color .15s, transform .15s}
 .ph-opt:hover{border-color:var(--sun); transform:translateY(-2px)}
 .ph-opt .pi{flex:none; width:40px; height:40px; border-radius:10px; background:var(--navy); color:var(--sun); display:grid; place-items:center}
 .ph-opt b{display:block}
-.ph-opt small{color:var(--ink-2); font-size:.85rem}
+.ph-opt small{display:block; color:var(--ink-2); font-size:.85rem; line-height:1.4}
 @media (max-width:480px){.ph-grid{grid-template-columns:1fr}}
 .note{font-size:.88rem; color:var(--ink-2); background:var(--surface); border:1px dashed var(--line); border-radius:10px; padding:10px 14px}
 </style>
@@ -633,7 +633,7 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
         </label>
         <label>Tell me a bit more<textarea name="msg" placeholder="What's taking up your time, and how many hours a week you have in mind." required></textarea></label>
         <button class="btn" type="submit">Send message</button>
-        <p class="fmsg" id="fmsg" role="status">This opens your email app with your message ready to send.</p>
+        <p class="fmsg" id="fmsg" role="status">You can send it with Gmail, Outlook, or your email app.</p>
       </form>
     </div>
   </div>
@@ -674,14 +674,28 @@ dialog::backdrop{background:rgba(12,16,34,.6); backdrop-filter:blur(3px)}
       <div class="row2"><label>Your name<input name="name" autocomplete="name"></label><label>Your email<input name="email" type="email" autocomplete="email"></label></div>
       <label>What would you like to talk about? (optional)<textarea name="notes" rows="3" style="min-height:90px"></textarea></label>
       <button class="btn sun" type="submit">Request this time</button>
-      <p class="fmsg" id="bk-msg" role="status">This opens your email app with the request ready to send. Gina confirms within one business day.</p>
+      <p class="fmsg" id="bk-msg" role="status">You'll send the request with Gmail, Outlook, or your email app. Gina confirms within one business day.</p>
     </form>
   </div>
   <div class="bk hidden" id="bk-done">
     <span class="bk-ok" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-    <div><h2>Your request is ready to send</h2><p class="muted" id="bk-done-txt" style="margin-top:10px"></p></div>
+    <div><h2>One last step: send your request</h2><p class="muted" id="bk-done-txt" style="margin-top:10px"></p></div>
     <div class="bk-actions"><a class="btn" id="bk-gcal" href="#" target="_blank" rel="noopener">Add to Google Calendar</a><button class="btn ghost" type="button" id="bk-again">Pick another time</button></div>
-    <p class="note">If your email app didn't open, email gianboq@gmail.com with the time you picked.</p>
+    <p class="note">Closed the sending window by mistake? <a href="#" id="bk-resend">Open it again</a>, or email gianboq@gmail.com with the time you picked.</p>
+  </div>
+</dialog>
+
+<dialog id="send" aria-labelledby="sd-title">
+  <div class="cs-top"><span>Send your message</span><button class="x" id="sd-close" type="button" aria-label="Close">&times;</button></div>
+  <div class="bk">
+    <div><h2 id="sd-title">Almost done. Pick how to send it.</h2><p class="muted" style="margin-top:10px">Your message is already written. Just press send in the app you choose.</p></div>
+    <div class="ph-grid">
+      <a class="ph-opt" id="sd-gmail" href="#" target="_blank" rel="noopener"><span class="pi" aria-hidden="true"><b style="font-size:1.05rem">G</b></span><span><b>Gmail</b><small>Opens in your browser</small></span></a>
+      <a class="ph-opt" id="sd-outlook" href="#" target="_blank" rel="noopener"><span class="pi" aria-hidden="true"><b style="font-size:1.05rem">O</b></span><span><b>Outlook</b><small>Opens in your browser</small></span></a>
+      <a class="ph-opt" id="sd-app" href="#"><span class="pi" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><span><b>Email app</b><small>Outlook app, Apple Mail, and others</small></span></a>
+      <button class="ph-opt" type="button" id="sd-copy"><span class="pi" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span><span><b id="sd-copy-t">Copy message</b><small>Paste it into an email to gianboq@gmail.com</small></span></button>
+    </div>
+    <textarea id="sd-text" class="hidden" readonly aria-label="Your message" style="min-height:140px"></textarea>
   </div>
 </dialog>
 
@@ -828,7 +842,7 @@ function openCase(id){
   dlg.scrollTop=0; body.parentNode.scrollTop=0;
 }
 document.addEventListener('click',function(e){
-  var ml=e.target.closest('a[href^="mailto:"]'); if(ml&&!ml.closest('#email')){e.preventDefault();links.classList.remove('open');menu.setAttribute('aria-expanded','false');openEmail();return}
+  var ml=e.target.closest('a[href^="mailto:"]'); if(ml&&!ml.closest('#email,#send')){e.preventDefault();links.classList.remove('open');menu.setAttribute('aria-expanded','false');openEmail();return}
   var tl=e.target.closest('a[href^="tel:"]'); if(tl&&!tl.closest('#phone')){e.preventDefault();links.classList.remove('open');menu.setAttribute('aria-expanded','false');openPhone();return}
   var o=e.target.closest('[data-id]'); if(o){openCase(o.dataset.id);return}
   if(e.target.closest('[data-close]')||e.target.id==='cs-close'){dlg.close()}
@@ -871,7 +885,7 @@ function setSummary(){
   bkSum.className='bk-sum';bkSum.textContent=dLocal(pick.ms)+', '+tLocal(pick.ms)+' your time ('+tCebu(pick.ms)+' in Cebu)';
 }
 function showStep(done){document.getElementById('bk-main').classList.toggle('hidden',done);document.getElementById('bk-done').classList.toggle('hidden',!done);bk.scrollTop=0}
-function openBook(){pick={d:null,ms:null};renderDays();bkSlots.innerHTML='<p class="muted">Pick a day first.</p>';setSummary();bkMsg.className='fmsg';bkMsg.textContent='This opens your email app with the request ready to send. Gina confirms within one business day.';showStep(false);if(!bk.open)bk.showModal()}
+function openBook(){pick={d:null,ms:null};renderDays();bkSlots.innerHTML='<p class="muted">Pick a day first.</p>';setSummary();bkMsg.className='fmsg';bkMsg.textContent='You\'ll send the request with Gmail, Outlook, or your email app. Gina confirms within one business day.';showStep(false);if(!bk.open)bk.showModal()}
 bkDays.addEventListener('click',function(e){var b=e.target.closest('[data-day]');if(!b)return;bkDays.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});pick.d=+b.dataset.day;pick.ms=null;renderSlots(pick.d);setSummary()});
 bkSlots.addEventListener('click',function(e){var b=e.target.closest('[data-ms]');if(!b)return;bkSlots.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});pick.ms=+b.dataset.ms;setSummary()});
 function gstamp(ms){return new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}
@@ -881,14 +895,36 @@ document.getElementById('bk-form').addEventListener('submit',function(e){
   if(!n||!/^\S+@\S+\.\S+$/.test(em)){bkMsg.className='fmsg err';bkMsg.textContent='Add your name and a valid email so Gina can confirm.';return}
   var when=dLocal(pick.ms)+', '+tLocal(pick.ms)+' ('+vtz+')';
   var body='Hi Gina,\n\nI would like to book a 30-minutes discovery call.\n\nMy time: '+when+'\nCebu time: '+new Date(pick.ms).toLocaleString('en-US',{weekday:'long',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'Asia/Manila'})+'\n\nName: '+n+'\nEmail: '+em+(notes?'\n\nWhat I would like to talk about:\n'+notes:'')+'\n';
-  window.location.href='mailto:gianboq@gmail.com?subject='+encodeURIComponent('Call request: '+dLocal(pick.ms)+', '+tLocal(pick.ms))+'&body='+encodeURIComponent(body);
-  document.getElementById('bk-done-txt').textContent='Your email app should open with a request for '+when+'. Send it, and Gina will reply within one business day with a meeting link.';
+  var bsub='Call request: '+dLocal(pick.ms)+', '+tLocal(pick.ms);
+  document.getElementById('bk-done-txt').textContent='Send your request for '+when+' with Gmail, Outlook, or your email app. Gina will reply within one business day with a meeting link.';
   document.getElementById('bk-gcal').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Discovery call with Gina Boquecosa')+'&dates='+gstamp(pick.ms)+'/'+gstamp(pick.ms+MINUTES*6e4)+'&details='+encodeURIComponent('30-minutes discovery call. Gina will send the meeting link by email.')+'&add=gianboq@gmail.com';
   showStep(true);
+  openSend(bsub, body);
 });
 document.getElementById('bk-again').addEventListener('click',openBook);
 document.getElementById('bk-close').addEventListener('click',function(){bk.close()});
 bk.addEventListener('click',function(e){if(e.target===bk)bk.close()});
+
+/* send dialog: works with or without a desktop email app */
+var sd=document.getElementById('send'), sdLast=null;
+function openSend(subject, body){
+  sdLast=[subject,body];
+  var to='gianboq@gmail.com', su=encodeURIComponent(subject), bo=encodeURIComponent(body);
+  document.getElementById('sd-gmail').href='https://mail.google.com/mail/?view=cm&fs=1&to='+to+'&su='+su+'&body='+bo;
+  document.getElementById('sd-outlook').href='https://outlook.live.com/mail/0/deeplink/compose?to='+to+'&subject='+su+'&body='+bo;
+  document.getElementById('sd-app').href='mailto:'+to+'?subject='+su+'&body='+bo;
+  var ta=document.getElementById('sd-text'); ta.value='To: '+to+'\nSubject: '+subject+'\n\n'+body; ta.classList.add('hidden');
+  document.getElementById('sd-copy-t').textContent='Copy message';
+  if(!sd.open) sd.showModal();
+}
+document.getElementById('sd-copy').addEventListener('click',function(){
+  var t=document.getElementById('sd-copy-t'), ta=document.getElementById('sd-text');
+  var sel=function(){ta.classList.remove('hidden');ta.focus();ta.select();t.textContent='Selected below, press Ctrl+C'};
+  try{navigator.clipboard.writeText(ta.value).then(function(){t.textContent='Copied! Paste it in an email';},sel)}catch(_){sel()}
+});
+document.getElementById('sd-close').addEventListener('click',function(){sd.close()});
+sd.addEventListener('click',function(e){if(e.target===sd)sd.close()});
+document.getElementById('bk-resend').addEventListener('click',function(e){e.preventDefault();if(sdLast)openSend(sdLast[0],sdLast[1])});
 
 /* email options */
 var emd=document.getElementById('email');
@@ -927,14 +963,11 @@ document.getElementById('form').addEventListener('submit',function(e){
   var f=e.target, m=document.getElementById('fmsg');
   var n=f.name.value.trim(), em=f.email.value.trim(), msg=f.msg.value.trim();
   if(!n||!em||!msg||!/^\S+@\S+\.\S+$/.test(em)){m.textContent='Add your name, a valid email, and a short message, then send again.';m.className='fmsg err';return}
-  var sub=encodeURIComponent(f.topic.value+' inquiry from '+n);
-  var bod=encodeURIComponent(msg+'\n\n'+n+'\n'+em);
-  window.location.href='mailto:gianboq@gmail.com?subject='+sub+'&body='+bod;
-  m.textContent='Your email app should open with the message ready. If it doesn\'t, email gianboq@gmail.com directly.';m.className='fmsg';
+  openSend(f.topic.value+' inquiry from '+n, msg+'\n\n'+n+'\n'+em);
+  m.textContent='Pick Gmail, Outlook, or your email app in the window to send it.';m.className='fmsg';
 });
 
 })();
 </script>
 </body>
 </html>
-
